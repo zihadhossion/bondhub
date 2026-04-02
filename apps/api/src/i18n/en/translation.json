@@ -1,0 +1,63 @@
+{
+  "auth": {
+    "registered": "User registered successfully.",
+    "loggedIn": "Logged in successfully.",
+    "loggedOut": "Logged out successfully.",
+    "tokenRefreshed": "Token refreshed successfully.",
+    "invalidCredentials": "Invalid email or password!",
+    "accountSuspended": "Your account has been suspended!",
+    "emailTaken": "An account with this email already exists!",
+    "passwordResetSent": "If an account with that email exists, a reset link has been sent.",
+    "passwordResetSuccess": "Password reset successfully.",
+    "passwordChanged": "Password changed successfully.",
+    "invalidCurrentPassword": "Current password is incorrect!",
+    "resetTokenInvalid": "Password reset token is invalid or has expired!",
+    "invalidRefreshToken": "Invalid refresh token!",
+    "notAuthenticated": "Authentication required."
+  },
+  "users": {
+    "notFound": "User not found!",
+    "profileUpdated": "Profile updated successfully.",
+    "followSuccess": "Successfully followed user.",
+    "unfollowSuccess": "Successfully unfollowed user.",
+    "alreadyFollowing": "You are already following this user!",
+    "notFollowing": "You are not following this user!",
+    "cannotFollowSelf": "You cannot follow yourself!"
+  },
+  "communities": {
+    "notFound": "Community not found!",
+    "joinSuccess": "Successfully joined community.",
+    "leaveSuccess": "Successfully left community.",
+    "alreadyMember": "You are already a member of this community!",
+    "notMember": "You are not a member of this community!",
+    "mustBeMember": "You must be a member of this community to post!",
+    "archived": "This community is archived!"
+  },
+  "categories": {
+    "notFound": "Category not found!",
+    "nameTaken": "A category with this name already exists!",
+    "hasActiveCommunities": "Cannot delete category that has active communities assigned!"
+  },
+  "posts": {
+    "notFound": "Post not found!",
+    "notOwner": "You do not have permission to modify this post!",
+    "created": "Post created successfully."
+  },
+  "comments": {
+    "notFound": "Comment not found!",
+    "notOwner": "You do not have permission to delete this comment!"
+  },
+  "flags": {
+    "created": "Content flagged for review.",
+    "alreadyFlagged": "You have already flagged this content!",
+    "resolved": "Flag resolved and content deleted.",
+    "dismissed": "Flag dismissed.",
+    "notFound": "Flag not found!"
+  },
+  "admin": {
+    "userNotFound": "User not found!",
+    "communityNotFound": "Community not found!",
+    "postNotFound": "Post not found!",
+    "commentNotFound": "Comment not found!"
+  }
+}
