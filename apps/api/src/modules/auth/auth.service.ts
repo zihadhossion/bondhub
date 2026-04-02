@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { Response } from 'express';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
+import type { StringValue } from 'ms';
 import { UserEntity } from '../users/entities/user.entity';
 import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
@@ -152,12 +153,12 @@ export class AuthService {
 
     const accessToken = this.jwtService.sign(payload, {
       secret: jwtSecret,
-      expiresIn: '1h',
+      expiresIn: this.configService.get('JWT_ACCESS_EXPIRY', '1h') as StringValue,
     });
 
     const refreshToken = this.jwtService.sign(payload, {
       secret: jwtRefreshSecret,
-      expiresIn: '7d',
+      expiresIn: this.configService.get('JWT_REFRESH_EXPIRY', '7d') as StringValue,
     });
 
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
