@@ -109,7 +109,7 @@ jobs:
               --name bondhub-migrate \
               --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
               --image "${IMAGE}" \
-              --command "[\"node\", \"apps/api/dist/database/migrate.js\"]"
+              --command node apps/api/dist/database/migrate.js
           else
             echo "Migration job not found — creating..."
             az containerapp job create \
@@ -130,7 +130,7 @@ jobs:
               --env-vars \
                 "DATABASE_URL=${{ secrets.DATABASE_URL }}" \
                 "NODE_ENV=production" \
-              --command "[\"node\", \"apps/api/dist/database/migrate.js\"]"
+              --command node apps/api/dist/database/migrate.js
           fi
 
           # Start the migration job
