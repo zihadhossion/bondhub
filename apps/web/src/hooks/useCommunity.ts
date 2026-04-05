@@ -74,9 +74,9 @@ export function useJoinOptimistic(communityId: string, isMember: boolean) {
     startTransition(async () => {
       addOptimistic(!isMember);
       if (isMember) {
-        await leave.mutateAsync(communityId);
+        await leave.mutateAsync();
       } else {
-        await join.mutateAsync(communityId);
+        await join.mutateAsync();
       }
       queryClient.invalidateQueries({ queryKey: ['communities', communityId] });
     });
