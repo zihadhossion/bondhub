@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import 'dotenv/config';
+import { join } from 'path';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../modules/users/entities/user.entity';
 import { CategoryEntity } from '../modules/categories/entities/category.entity';
@@ -31,7 +32,7 @@ export const AppDataSource = new DataSource({
     NotificationEntity,
     PostLikeEntity,
   ],
-  migrations: ['src/database/migrations/*.ts'],
+  migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
   synchronize: false,
   logging: process.env.NODE_ENV === 'development',
 });
