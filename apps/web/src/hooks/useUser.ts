@@ -88,9 +88,9 @@ export function useFollowOptimistic(userId: string, isFollowing: boolean) {
     startTransition(async () => {
       addOptimistic(!isFollowing);
       if (isFollowing) {
-        await unfollow.mutateAsync(userId);
+        await unfollow.mutateAsync();
       } else {
-        await follow.mutateAsync(userId);
+        await follow.mutateAsync();
       }
       queryClient.invalidateQueries({ queryKey: ['users', userId] });
     });
