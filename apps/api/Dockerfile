@@ -37,6 +37,9 @@ COPY --from=pruner /app/out/full/ .
 # Build the API (outputs to apps/api/dist/)
 RUN npm run build --workspace=apps/api
 
+# Compile standalone migration script (excluded from nest build since it's not imported by main.ts)
+RUN cd apps/api && npx tsc -p tsconfig.scripts.json
+
 # ============================================================
 # Stage 3: Runner
 # Minimal production image — only compiled output + prod deps
