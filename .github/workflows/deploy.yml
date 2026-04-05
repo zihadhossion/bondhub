@@ -100,29 +100,36 @@ jobs:
           IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-${GITHUB_SHA}"
 
           # Create the migration job if it doesn't exist yet (first deploy)
-          az containerapp job create \
-            --name bondhub-migrate \
-            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-            --environment ${{ env.AZURE_CONTAINER_APP_ENV }} \
-            --trigger-type Manual \
-            --replica-timeout 300 \
-            --replica-retry-limit 1 \
-            --replica-completion-count 1 \
-            --parallelism 1 \
-            --image "${IMAGE}" \
-            --registry-server ghcr.io \
-            --registry-username ${{ github.actor }} \
-            --registry-password ${{ secrets.GHCR_PAT }} \
-            --cpu 0.5 \
-            --memory 1Gi \
-            --env-vars \
-              "DATABASE_URL=secretref:database-url" \
-              "NODE_ENV=production" \
-            2>/dev/null || \
-          az containerapp job update \
-            --name bondhub-migrate \
-            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-            --image "${IMAGE}"
+          if az containerapp job show \
+               --name bondhub-migrate \
+               --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+               --output none 2>/dev/null; then
+            echo "Migration job exists — updating image..."
+            az containerapp job update \
+              --name bondhub-migrate \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --image "${IMAGE}"
+          else
+            echo "Migration job not found — creating..."
+            az containerapp job create \
+              --name bondhub-migrate \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --environment ${{ env.AZURE_CONTAINER_APP_ENV }} \
+              --trigger-type Manual \
+              --replica-timeout 300 \
+              --replica-retry-limit 1 \
+              --replica-completion-count 1 \
+              --parallelism 1 \
+              --image "${IMAGE}" \
+              --registry-server ghcr.io \
+              --registry-username ${{ github.actor }} \
+              --registry-password ${{ secrets.GHCR_PAT }} \
+              --cpu 0.5 \
+              --memory 1Gi \
+              --env-vars \
+                "DATABASE_URL=secretref:database-url" \
+                "NODE_ENV=production"
+          fi
 
           # Start the migration job
           EXECUTION_NAME=$(az containerapp job start \
