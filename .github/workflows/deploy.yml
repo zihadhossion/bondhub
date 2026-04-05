@@ -127,7 +127,7 @@ jobs:
               --cpu 0.5 \
               --memory 1Gi \
               --env-vars \
-                "DATABASE_URL=secretref:database-url" \
+                "DATABASE_URL=${{ secrets.DATABASE_URL }}" \
                 "NODE_ENV=production"
           fi
 
