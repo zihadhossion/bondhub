@@ -4,6 +4,15 @@ import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { UserEntity } from '../../modules/users/entities/user.entity';
+import { CategoryEntity } from '../../modules/categories/entities/category.entity';
+import { CommunityEntity } from '../../modules/communities/entities/community.entity';
+import { CommunityMemberEntity } from '../../modules/communities/entities/community-member.entity';
+import { PostEntity } from '../../modules/posts/entities/post.entity';
+import { CommentEntity } from '../../modules/comments/entities/comment.entity';
+import { FollowEntity } from '../../modules/users/entities/follow.entity';
+import { FlagEntity } from '../../modules/flags/entities/flag.entity';
+import { NotificationEntity } from '../../modules/notifications/entities/notification.entity';
+import { PostLikeEntity } from '../../modules/posts/entities/post-like.entity';
 import { RoleEnum } from '../../shared/enums/role.enum';
 import { UserStatusEnum } from '../../shared/enums/user-status.enum';
 
@@ -24,7 +33,18 @@ const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: [UserEntity],
+  entities: [
+    UserEntity,
+    CategoryEntity,
+    CommunityEntity,
+    CommunityMemberEntity,
+    PostEntity,
+    CommentEntity,
+    FollowEntity,
+    FlagEntity,
+    NotificationEntity,
+    PostLikeEntity,
+  ],
   synchronize: false,
   logging: false,
 });
