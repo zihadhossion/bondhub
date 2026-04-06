@@ -64,6 +64,10 @@ RUN npm ci --omit=dev && npm cache clean --force
 # Copy compiled application
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
 
+# Copy entrypoint script
+COPY apps/api/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+
 RUN chown -R nestjs:nodejs /app
 
 USER nestjs
@@ -73,5 +77,4 @@ EXPOSE 5001
 ENV NODE_ENV=production
 ENV PORT=5001
 
-# Migrations are run as a separate pre-deploy step (Container Apps Job)
-CMD ["node", "apps/api/dist/main.js"]
+CMD ["/app/entrypoint.sh"]
