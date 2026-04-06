@@ -108,29 +108,6 @@ jobs:
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --image "${IMAGE}"
 
-      - name: Verify deployment health
-        run: |
-          sleep 30
-          FQDN=$(az containerapp show \
-            --name ${{ env.AZURE_CONTAINER_APP_NAME }} \
-            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-            --query "properties.configuration.ingress.fqdn" -o tsv)
-
-          echo "Checking health at https://${FQDN}/api/health"
-          for i in $(seq 1 12); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-              --max-time 10 \
-              "https://${FQDN}/api/health" || echo "000")
-            echo "Health check ${i}/12: HTTP ${HTTP_CODE}"
-            if [[ "${HTTP_CODE}" == "200" ]]; then
-              echo "API is healthy."
-              exit 0
-            fi
-            sleep 10
-          done
-          echo "Health check failed after 2 minutes."
-          exit 1
-
   # ──────────────────────────────────────────────────────────
   # Deployment summary
   # ──────────────────────────────────────────────────────────

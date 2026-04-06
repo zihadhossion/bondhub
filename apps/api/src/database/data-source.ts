@@ -13,13 +13,17 @@ import { FlagEntity } from '../modules/flags/entities/flag.entity';
 import { NotificationEntity } from '../modules/notifications/entities/notification.entity';
 import { PostLikeEntity } from '../modules/posts/entities/post-like.entity';
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is required');
+if (!process.env.DB_HOST) {
+  throw new Error('DB_HOST environment variable is required');
 }
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url: process.env.DATABASE_URL,
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT ?? '5432', 10),
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   entities: [
     UserEntity,
     CategoryEntity,
