@@ -23,7 +23,6 @@ import { RoleEnum } from '../../shared/enums/role.enum';
 export class AuthService {
   private readonly COOKIE_OPTIONS_BASE = {
     httpOnly: true as const,
-    sameSite: 'strict' as const,
     path: '/',
   };
 
@@ -103,8 +102,9 @@ export class AuthService {
   async logout(userId: string, res: Response): Promise<void> {
     await this.userRepository.update(userId, { refreshTokenHash: null });
     const isProduction = this.configService.get<string>('NODE_ENV') === 'production';
-    res.clearCookie('accessToken', { ...this.COOKIE_OPTIONS_BASE, secure: isProduction });
-    res.clearCookie('refreshToken', { ...this.COOKIE_OPTIONS_BASE, secure: isProduction });
+    const sameSite = isProduction ? ('none' as const) : ('strict' as const);
+    res.clearCookie('accessToken', { ...this.COOKIE_OPTIONS_BASE, secure: isProduction, sameSite });
+    res.clearCookie('refreshToken', { ...this.COOKIE_OPTIONS_BASE, secure: isProduction, sameSite });
   }
 
   async forgotPassword(email: string): Promise<void> {
@@ -167,6 +167,7 @@ export class AuthService {
     const cookieBase = {
       ...this.COOKIE_OPTIONS_BASE,
       secure: isProduction,
+      sameSite: isProduction ? ('none' as const) : ('strict' as const),
     };
 
     res.cookie('accessToken', accessToken, {
