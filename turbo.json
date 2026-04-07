@@ -4,8 +4,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "tsconfig*.json", "vite.config.*", "nest-cli.json", "package.json"],
-      "outputs": ["dist/**"]
+      "inputs": ["src/**", "app/**", "tsconfig*.json", "vite.config.*", "react-router.config.*", "nest-cli.json", "package.json"],
+      "outputs": ["dist/**", "build/**"]
     },
     "dev": {
       "cache": false,
