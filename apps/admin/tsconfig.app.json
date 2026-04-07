@@ -6,6 +6,11 @@
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "types": ["vite/client"],
+    "rootDirs": [".", "./.react-router/types"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"]
+    },
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -24,5 +29,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["app", ".react-router/types/**/*"]
 }
